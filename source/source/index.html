@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
+    <link rel="stylesheet" href="styles/style.min.css">
+    <title>Watch</title>         
+</head>
+<body>
+
+   <div class="wrapper">
+    
+        <nav class="menu">
+            <ul class="menu__list">
+                <li class="menu__list__item btn hidden" id="menu-item-timer">Таймер</li>
+                <li class="menu__list__item btn hidden" id="menu-item-stopwatch">Секундомер</li>
+                <li class="menu__list__item btn hidden" id="menu-item-options">Настройки</li>
+            </ul>
+        </nav>
+    
+        <main class="main">
+            <div class="slider">
+                <div class="slider__line">
+
+                    <!-- Слайд с таймером -->
+                    <div class="slider__line__item">
+
+                        <div class="time-panel">
+
+                            <div class="time-panel__item">
+
+                                <div class="time-panel__item__watch hidden js-timer-watch">
+                                    <div class="time-panel__item__watch__number" id="timer-hour">
+                                        <span class="arrow-up"></span>
+                                        <div class="timer-hour__number">00</div>
+                                        <span class="arrow-down"></span>
+                                    </div>
+                                    :
+                                    <div class="time-panel__item__watch__number" id="timer-minute">
+                                        <span class="arrow-up"></span>
+                                        <div class="timer-minute__number">00</div>
+                                        <span class="arrow-down"></span>
+                                    </div>
+                                    .
+                                    <div class="time-panel__item__watch__number" id="timer-seconds">
+                                        <span class="arrow-up"></span>
+                                        <div class="timer-seconds__number">00</div>
+                                        <span class="arrow-down"></span>
+                                    </div>
+                                </div>
+                                
+                                <div class="time-panel__item__btns time-panel__item__btns--layout-time">
+                                    <div class="time-panel__item__btns__btn btn hidden js-timer-btns-one" id="timer-layout-10">10 мин</div>
+                                    <div class="time-panel__item__btns__btn btn hidden js-timer-btns-one" id="timer-layout-15">15 мин</div>
+                                    <div class="time-panel__item__btns__btn btn hidden js-timer-btns-one" id="timer-layout-20">20 мин</div>
+                                </div>
+
+                                <div class="time-panel__item__btns">
+                                    <div class="time-panel__item__btns__btn btn hidden js-timer-btns-two timer-start"  id="timer-start">Старт</div>
+                                    <div class="time-panel__item__btns__btn btn hidden js-timer-btns-two timer-delete" id="timer-delete">Удалить</div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        
+                    </div>
+
+                    <!-- Слайд с секундомером -->
+                    <div class="slider__line__item">
+
+                        <div class="time-panel">
+
+                            <div class="time-panel__item">
+
+                                <div class="time-panel__item__watch hidden js-stopwatch-watch">
+                                    <div class="time-panel__item__watch__number" id="stopwatch-hour">
+                                        <span class="arrow-up"></span>
+                                        <div  class="stopwatch-hour__number">00</div>
+                                        <span class="arrow-down"></span>
+                                    </div>
+                                    :
+                                    <div class="time-panel__item__watch__number" id="stopwatch-minute">
+                                        <span class="arrow-up"></span>
+                                        <div  class="stopwatch-minute__number">00</div>
+                                        <span class="arrow-down"></span>
+                                    </div>
+                                    .
+                                    <div class="time-panel__item__watch__number" id="stopwatch-seconds">
+                                        <span class="arrow-up"></span>
+                                        <div  class="stopwatch-seconds__number">00</div>
+                                        <span class="arrow-down"></span>
+                                    </div>
+                                </div>
+                                
+                                <div class="time-panel__item__btns">
+                                    <div class="time-panel__item__btns__btn btn hidden js-stopwatch-btns stopwatch-interval" id="stopwatch-interval">Интевал</div>
+                                    <div class="time-panel__item__btns__btn btn hidden js-stopwatch-btns stopwatch-start"    id="stopwatch-start">Старт</div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <ul class="time-list">
+
+                            <li class="time-list__item time-list__item--title">
+
+                                <ul class="time-list__id-list">
+                                    <li class="time-list__id-list__item time-list__id-list__item--title">#</li>
+                                </ul>
+
+                            </li>
+
+                            <li class="time-list__item time-list__item--title">
+
+                                <ul class="time-list__time-list">
+                                    <li class="time-list__id-list__item time-list__id-list__item--title">Зафиксированное время</li>
+                                </ul>
+
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+                    <!-- Слайд с настройками -->
+                    <div class="slider__line__item"></div>
+
+                </div>
+            </div>
+        
+            <div class="slider__btns">
+                <div class="slider__btns__btn btn" id="slider-btn-one"></div>
+                <div class="slider__btns__btn btn" id="slider-btn-two"></div>
+                <div class="slider__btns__btn btn" id="slider-btn-tree"></div>
+            </div>
+        </main>
+   </div>
+   
+    <script type="module" src="scripts/main.min.js"></script>
+</body>
+</html>
