@@ -458,7 +458,24 @@ timerBtnsActive.onclick = (event)=>{
                 if(secondsTimer == 0 && minuteTimer == 0 && hourTimer == 0){
         
                     clearInterval(idIntervalTimer);
+
                     timerBtnsActive.children[0].innerText = 'Старт';
+
+                    //Добавляем стрелки
+                    for (let i = 0; i < timerArrowUp.length; i++) {
+
+                        timerArrowUp[i].style.opacity = '1';
+
+                        timerArrowDown[i].style.opacity = '1';
+                        
+                        setTimeout(()=>{
+
+                            timerArrowUp[i].style.display = 'block';
+
+                            timerArrowDown[i].style.display = 'block';
+
+                        }, 700);
+                    }
                 }
         
                 secondsTimer--;
