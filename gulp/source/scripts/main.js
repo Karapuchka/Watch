@@ -1,12 +1,17 @@
-const stopwatchMilliseconds     = document.getElementById('stopwatch-milliseconds');
-const stopwatchBtnsActive       = document.getElementById('stopwatch-btns-active');
-const stopwatchSeconds          = document.getElementById('stopwatch-seconds');
-const stopwatchMinute           = document.getElementById('stopwatch-minute');
+const stopwatchMilliseconds = document.getElementById('stopwatch-milliseconds');
+const stopwatchBtnsActive   = document.getElementById('stopwatch-btns-active');
+const stopwatchSeconds      = document.getElementById('stopwatch-seconds');
+const stopwatchMinute       = document.getElementById('stopwatch-minute');
+
 
 const timerBtnsActive = document.getElementById('timer-btns-active');
 const timerSeconds    = document.getElementById('timer-seconds');
 const timerMinute     = document.getElementById('timer-minute');
 const timerHour       = document.getElementById('timer-hour');
+
+const timerArrowUp   = document.getElementsByClassName('js-timer-arrow-up');
+const timerArrowDown = document.getElementsByClassName('js-timer-arrow-down');
+
 
 const sliderLine = document.querySelector('.slider__line');
 const sliderBtn  = document.querySelector('.slider__btns');
@@ -196,19 +201,19 @@ sliderLine.onclick = (event)=>{
         if(event.target.parentElement.id == 'timer-hour' && +event.target.parentElement.children[1].innerText < 99){
             
             // Если значение меньше 9, то к новому значению будет с лева приписываться 0
-            if(+event.target.parentElement.children[1].innerText < 9){
+            if(+timerHour.children[1].innerText < 9){
 
-                event.target.parentElement.children[1].innerText = '0'+ (+event.target.parentElement.children[1].innerText + 1);
+                timerHour.children[1].innerText = '0'+ (+timerHour.children[1].innerText + 1);
 
             } else {
 
-                event.target.parentElement.children[1].innerText = +event.target.parentElement.children[1].innerText + 1;
+                timerHour.children[1].innerText = +timerHour.children[1].innerText + 1;
             }
 
             // Если была нажата кнопка, отвечающая за часы и при этом на табле равно 99, то значение будет равно 00
-        } else if(event.target.parentElement.id == 'timer-hour' && +event.target.parentElement.children[1].innerText == 99){
+        } else if(event.target.parentElement.id == 'timer-hour' && +timerHour.children[1].innerText == 99){
 
-            event.target.parentElement.children[1].innerText = '00';
+            timerHour.children[1].innerText = '00';
 
         } 
 
@@ -241,20 +246,20 @@ sliderLine.onclick = (event)=>{
 
         event.target.classList.add('arrow-down--active');
 
-        if(event.target.parentElement.id == 'timer-hour' && +event.target.parentElement.children[1].innerText > 0){
+        if(event.target.parentElement.id == 'timer-hour' && +timerHour.children[1].innerText > 0){
 
-            if(+event.target.parentElement.children[1].innerText <= 10){
+            if(+timerHour.children[1].innerText <= 10){
 
-                event.target.parentElement.children[1].innerText = '0'+ (+event.target.parentElement.children[1].innerText - 1);
+                timerHour.children[1].innerText = '0'+ (+timerHour.children[1].innerText - 1);
 
             } else {
 
-                event.target.parentElement.children[1].innerText = +event.target.parentElement.children[1].innerText - 1;
+                timerHour.children[1].innerText = +timerHour.children[1].innerText - 1;
             }
 
-        } else if(event.target.parentElement.id == 'timer-hour' && +event.target.parentElement.children[1].innerText == 0){
+        } else if(event.target.parentElement.id == 'timer-hour' && +timerHour.children[1].innerText == 0){
 
-            event.target.parentElement.children[1].innerText = 99;
+            timerHour.children[1].innerText = 99;
         }
 
         if((event.target.parentElement.id == 'timer-minute' || event.target.parentElement.id == 'timer-seconds') && +event.target.parentElement.children[1].innerText > 0){
@@ -294,14 +299,6 @@ sliderLine.onclick = (event)=>{
     if(event.target.id == 'timer-layout-20'){
 
         event.target.parentElement.parentElement.children[0].children[1].children[1].innerText = 20;
-    }
-
-    // Удаление значения из таймера
-    if(event.target.id == 'timer-delete'){
-
-        event.target.parentElement.parentElement.children[0].children[0].children[1].innerText = '00';
-        event.target.parentElement.parentElement.children[0].children[1].children[1].innerText = '00';
-        event.target.parentElement.parentElement.children[0].children[2].children[1].innerText = '00';
     }
 }
 
@@ -352,7 +349,7 @@ stopwatchBtnsActive.onclick = (event)=>{
     }
 }
 
-let idIntervakTimer;
+let idIntervalTimer;
 
 timerBtnsActive.onclick = (event)=>{
 
@@ -362,86 +359,140 @@ timerBtnsActive.onclick = (event)=>{
 
             event.target.innerText = 'Старт';
 
-            clearInterval(idIntervakTimer);
-        }
+            clearInterval(idIntervalTimer);
 
-        if(event.target.innerText == 'Старт'){
+            //Добавляем стрелки
+            for (let i = 0; i < timerArrowUp.length; i++) {
 
-            event.target.innerText = 'Стоп';
+                timerArrowUp[i].style.opacity = '1';
 
-            timerMove(timerSeconds.children[1], timerMinute.children[1], timerHour.children[1], idIntervakTimer);
-        }
-    }
-}
+                timerArrowDown[i].style.opacity = '1';
+                
+                setTimeout(()=>{
 
-function timerMove(seconds, minute, hour, interval){
+                    timerArrowUp[i].style.display = 'block';
 
-    let hourTimer    = +hour.innerText;
-    let minuteTimer  = +minute.innerText;
-    let secondsTimer = +seconds.innerText;
+                    timerArrowDown[i].style.display = 'block';
 
-    interval = setInterval(()=>{
-
-        if(secondsTimer < 10){
-    
-            seconds.innerText = `0${secondsTimer}`;
+                }, 700);
+            }
 
         } else {
 
-            seconds.innerText = secondsTimer;
+            //Убираем стрелки
+            for (let i = 0; i < timerArrowUp.length; i++) {
 
-        }
+                timerArrowUp[i].style.opacity = '0';
 
-        if(secondsTimer == 0 && (minuteTimer > 0 || hourTimer > 0)){
+                timerArrowDown[i].style.opacity = '0';
+                
+                setTimeout(()=>{
 
-            if(minuteTimer > 0){
+                    timerArrowUp[i].style.display = 'block';
 
-                secondsTimer = 59;
-                seconds.innerText = secondsTimer;
+                    timerArrowDown[i].style.display = 'block';
 
-                minuteTimer--;
-
-                if(minuteTimer < 10){
-
-                    minute.innerText = `0${minuteTimer}`;
-
-                } else {
-                    
-                    minute.innerText = minuteTimer;
-
-                }
+                }, 700);
             }
 
-            if(hourTimer > 0 && minuteTimer == 0){
+            event.target.innerText = 'Стоп';
 
-                minuteTimer = 59;
-                minute.innerText = minuteTimer;
+            let hourTimer    = +timerHour.children[1].innerText;
+            let minuteTimer  = +timerMinute.children[1].innerText;
+            let secondsTimer = +timerSeconds.children[1].innerText;
 
-                hourTimer--;
+            idIntervalTimer = setInterval(()=>{
 
-                if(hourTimer < 10){
-
-                    hour.innerText = `0${hourTimer}`;
-
+                if(secondsTimer < 10){
+            
+                    timerSeconds.children[1].innerText = `0${secondsTimer}`;
+        
                 } else {
-                    
-                    hour.innerText = hourTimer;
-
+        
+                    timerSeconds.children[1].innerText = secondsTimer;
+        
                 }
-            }
+        
+                if(secondsTimer == 0 && (minuteTimer > 0 || hourTimer > 0)){
+        
+                    if(minuteTimer > 0){
+        
+                        secondsTimer = 59;
+                        timerSeconds.children[1].innerText = secondsTimer;
+        
+                        minuteTimer--;
+        
+                        if(minuteTimer < 10){
+        
+                            timerMinute.children[1].innerText = `0${minuteTimer}`;
+        
+                        } else {
+                            
+                            timerMinute.children[1].innerText = minuteTimer;
+        
+                        }
+                    }
+        
+                    if(hourTimer > 0 && minuteTimer == 0){
+        
+                        minuteTimer = 59;
+                        timerMinute.children[1].innerText = minuteTimer;
+        
+                        secondsTimer = 59;
+                        timerSeconds.children[1].innerText = secondsTimer;
+        
+                        hourTimer--;
+        
+                        if(hourTimer < 10){
+        
+                            timerHour.children[1].innerText = `0${hourTimer}`;
+        
+                        } else {
+                            
+                            timerHour.children[1].innerText = hourTimer;
+        
+                        }
+                    }
+                }
+        
+                if(secondsTimer == 0 && minuteTimer == 0 && hourTimer == 0){
+        
+                    clearInterval(idIntervalTimer);
+                    timerBtnsActive.children[0].innerText = 'Старт';
+                }
+        
+                secondsTimer--;
+        
+            }, 1000);
         }
+    }
 
-        if(secondsTimer == 0 && minuteTimer == 0 && hourTimer == 0){
+    if(event.target.id == 'timer-delete'){
 
-            clearInterval(interval);
-            timerBtnsActive.children[0].innerText = 'Старт';
-            console.log(false);
+        timerSeconds.children[1].innerText = '00';
+        timerMinute.children[1].innerText  = '00';
+        timerHour.children[1].innerText    = '00';
+
+        clearInterval(idIntervalTimer);
+
+        timerBtnsActive.children[0].innerText = 'Старт';
+
+        //Добавляем стрелки
+        for (let i = 0; i < timerArrowUp.length; i++) {
+
+            timerArrowUp[i].style.opacity = '1';
+
+            timerArrowDown[i].style.opacity = '1';
+            
+            setTimeout(()=>{
+
+                timerArrowUp[i].style.display = 'block';
+
+                timerArrowDown[i].style.display = 'block';
+
+            }, 700);
         }
-
-        secondsTimer--;
-
-    }, 1000);
-
+    }
 }
 
 // Доделать правильон отображения таймера при работе с часами. 

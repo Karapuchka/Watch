@@ -236,32 +236,46 @@
             display: flex;
 
             &__number{
+
                 position: relative;
             }
 
             .arrow-up{
+
                 position: absolute;
                 left: 20px; 
                 top: -40px;
+                
                 border: 20px solid transparent;
                 border-bottom: 20px solid rgb(46, 46, 46);
+
+                transition: all .4s ease;
             }
             
             .arrow-down{
+
                 position: absolute;
                 left: 20px; 
                 bottom: -40px;
+
                 border: 20px solid transparent;
                 border-top: 20px solid rgb(46, 46, 46);
+
+                transition: all .4s ease;
+
             }
 
             .arrow-down--active{
+
                 transition: all .4s ease;
+
                 bottom: -45px;
             }
 
             .arrow-up--active{
+
                 transition: all .4s ease;
+
                 top: -45px;
             }
         }
