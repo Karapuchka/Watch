@@ -1,7 +1,10 @@
 const stopwatchMilliseconds = document.getElementById('stopwatch-milliseconds');
 const stopwatchBtnsActive   = document.getElementById('stopwatch-btns-active');
+const stopwatchTimePanel    = document.getElementById('stopwatch-panel-time');
 const stopwatchSeconds      = document.getElementById('stopwatch-seconds');
 const stopwatchMinute       = document.getElementById('stopwatch-minute');
+const stopwatchList         = document.getElementById('stopwatch-list');
+const stopwatch             = document.getElementById('stopwatch');
 
 
 const timerBtnsActive = document.getElementById('timer-btns-active');
@@ -327,27 +330,150 @@ function closeMenu(){
     }, 800)
 }
 
+
+
+
 let idIntervalStopwatch;
+let countStopwatch = 0;
 
 stopwatchBtnsActive.onclick = (event)=>{
     
     if(event.target.id == 'stopwatch-start'){
 
-        stopwatchMilliseconds.innerText = +stopwatchMilliseconds.innerText + 1;
+        if(event.target.innerText == 'Старт'){
 
-        if(+stopwatchMilliseconds.innerText < 10){
-            
+            event.target.innerText = 'Стоп';
+
+            let milliseconds = +stopwatchMilliseconds.innerText;
+            let seconds      = +stopwatchSeconds.innerText;
+            let minute       = +stopwatchMinute.innerText;
+
+            idIntervalStopwatch = setInterval(()=>{
+
+                if(milliseconds < 10){
+
+                    stopwatchMilliseconds.innerText = `0${milliseconds}`;
+                } else{
+
+                    stopwatchMilliseconds.innerText = milliseconds;
+                }
+
+                if(milliseconds == 10 && seconds < 60){
+
+                    milliseconds = 0;
+                    stopwatchMilliseconds.innerText = '00';
+
+                    seconds++
+                    
+                    if(seconds < 10){
+
+                        stopwatchSeconds.innerText = `0${seconds}`;
+                    } else{
+    
+                        stopwatchSeconds.innerText = seconds;
+                    }
+                }
+
+                if(seconds == 60 && minute < 60){
+
+                    seconds = 0;
+                    stopwatchSeconds.innerText = '00';
+
+                    minute++
+                    
+                    if(minute < 10){
+
+                        stopwatchMinute.innerText = `0${minute}`;
+                    } else{
+    
+                        stopwatchMinute.innerText = minute;
+                    }
+                }
+
+                if(minute == 60 && seconds == 60 && milliseconds == 10){
+
+                    clearInterval(idIntervalStopwatch);
+                }
+
+                milliseconds++;   
+
+            }, 100);
+
+        } else {
+
+            event.target.innerText = 'Старт';
+
+            clearInterval(idIntervalStopwatch);
         }
     }
 
     if(event.target.id == 'stopwatch-interval'){
+
+        countStopwatch++;
+
+        let milliseconds = +stopwatchMilliseconds.innerText;
+        let seconds      = +stopwatchSeconds.innerText;
+        let minute       = +stopwatchMinute.innerText;
+
+        if(milliseconds < 10){
+
+            milliseconds = `0${milliseconds}`;
+        }
+
+        if(seconds < 10){
+
+            seconds = `0${seconds}`;
+        }
+
+        if(minute < 10){
+
+            minute = `0${minute}`;
+        }
+
+        stopwatchList.appendChild(newItemStopwatch(countStopwatch, `${minute}:${seconds}.${milliseconds}`));
+
+        if(window.innerHeight < window.innerWidth){
+
+            stopwatch.style.flexDirection = 'row';
+
+        } else{
+
+            stopwatch.style.flexDirection = 'column';
+        }
+
+        stopwatch.style.display = 'flex';
         
+        stopwatchTimePanel.style.flex = '1 1 50%';
+
+        stopwatchList.style.flex = '1 1 50%';
+
+        stopwatchList.style.display = 'block';
     }
 
     if(event.target.id == 'stopwatch-del'){
+
+        countStopwatch = 0;
+
+        stopwatchMilliseconds.innerText = '00';
+        stopwatchSeconds.innerText      = '00';
+        stopwatchMinute.innerText       = '00';
+
+        clearInterval(idIntervalStopwatch);
         
+        stopwatchList.innerHTML = '<li class="time-list__item time-list__item--title"><span>#</span> <span>Зафиксированное время</span></li>';
+    
     }
 }
+
+
+function newItemStopwatch(count, interval){
+    let li = document.createElement('li');
+    li.classList.add('time-list__item');
+    li.innerHTML = `<span>${count}</span> <span>${interval}</span>`;
+    return li;
+}
+
+
 
 let idIntervalTimer;
 
@@ -512,5 +638,4 @@ timerBtnsActive.onclick = (event)=>{
     }
 }
 
-// Доделать правильон отображения таймера при работе с часами. 
-// Сделать нормальными способы удалить и остановить таймер
+//Доделать нормальное отобржание таймера и откарректировать стили при альбомной ориентации экрана
