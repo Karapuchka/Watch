@@ -12,6 +12,8 @@ const timerSeconds    = document.getElementById('timer-seconds');
 const timerMinute     = document.getElementById('timer-minute');
 const timerHour       = document.getElementById('timer-hour');
 
+const timerWatch      = document.querySelector('.js-timer-watch');
+
 const timerArrowUp   = document.getElementsByClassName('js-timer-arrow-up');
 const timerArrowDown = document.getElementsByClassName('js-timer-arrow-down');
 
@@ -20,7 +22,32 @@ const sliderLine = document.querySelector('.slider__line');
 const sliderBtn  = document.querySelector('.slider__btns');
 const menu       = document.querySelector('.menu');
 
-let detect = new MobileDetect(window.navigator.userAgent)
+let detect = new MobileDetect(window.navigator.userAgent);
+
+window.onresize = ()=>{
+
+    if(window.innerHeight < window.innerWidth){
+
+        stopwatch.style.flexDirection = 'row';
+
+        stopwatchList.style.padding = '5px 25px';
+
+        document.querySelector('.time-panel__item__btns--layout-time').style.margin = '15px 0 0 0';
+
+        timerWatch.style.margin = '20px 0 0 0';
+
+    } else{
+
+        stopwatch.style.flexDirection = 'column';
+
+        stopwatchList.style.padding = '5px 25px';
+
+        document.querySelector('.time-panel__item__btns--layout-time').style.margin = '0 0 20px 0';
+
+        timerWatch.style.margin = '0';
+    }
+
+}
 
 if(detect.mobile()){
 
@@ -67,6 +94,21 @@ document.addEventListener('DOMContentLoaded', ()=>{
 })
 
 menu.onclick = (event)=>{
+
+    if(window.innerHeight < window.innerWidth){
+
+        stopwatch.style.flexDirection = 'row';
+
+        stopwatchList.style.padding = '5px 25px';
+
+        document.querySelector('.time-panel__item__btns--layout-time').style.margin = '15px 0 0 0';
+
+        timerWatch.style.margin = '20px 0 0 0';
+
+    } else{
+
+        stopwatch.style.flexDirection = 'column';
+    }
 
     if(event.target.id == 'menu-item-timer'){
         for (let i = 0; i < sliderBtn.children.length; i++) {
@@ -116,7 +158,7 @@ menu.onclick = (event)=>{
         uprise(document.querySelectorAll('.js-timer-btns-two'), false); 
     }
 
-    if(event.target.id == 'menu-item-options'){
+    if(event.target.id == 'menu-item-alarm'){
         for (let i = 0; i < sliderBtn.children.length; i++) {
 
             if(sliderBtn.children[i].classList.contains('slider__btns__btn--active')){
@@ -131,6 +173,13 @@ menu.onclick = (event)=>{
         sliderLine.style.transform = 'translateX(' + (-window.innerWidth * 2) + 'px)';
 
         closeMenu();
+
+        uprise(document.querySelectorAll('.js-stopwatch-watch'), false); 
+        uprise(document.querySelectorAll('.js-stopwatch-btns'), false); 
+
+        uprise(document.querySelectorAll('.js-timer-watch'), false); 
+        uprise(document.querySelectorAll('.js-timer-btns-one'), false); 
+        uprise(document.querySelectorAll('.js-timer-btns-two'), false); 
     }
 }
 
@@ -332,7 +381,6 @@ function closeMenu(){
 
 
 
-
 let idIntervalStopwatch;
 let countStopwatch = 0;
 
@@ -432,22 +480,13 @@ stopwatchBtnsActive.onclick = (event)=>{
 
         stopwatchList.appendChild(newItemStopwatch(countStopwatch, `${minute}:${seconds}.${milliseconds}`));
 
-        if(window.innerHeight < window.innerWidth){
-
-            stopwatch.style.flexDirection = 'row';
-
-        } else{
-
-            stopwatch.style.flexDirection = 'column';
-        }
-
         stopwatch.style.display = 'flex';
-        
-        stopwatchTimePanel.style.flex = '1 1 50%';
 
-        stopwatchList.style.flex = '1 1 50%';
+        stopwatchTimePanel.style.flex = '1 1 60%';
 
+        stopwatchList.style.flex = '1 1 40%';
         stopwatchList.style.display = 'block';
+        
     }
 
     if(event.target.id == 'stopwatch-del'){
@@ -461,7 +500,8 @@ stopwatchBtnsActive.onclick = (event)=>{
         clearInterval(idIntervalStopwatch);
         
         stopwatchList.innerHTML = '<li class="time-list__item time-list__item--title"><span>#</span> <span>Зафиксированное время</span></li>';
-    
+        
+        stopwatchBtnsActive.children[1].innerText = 'Старт';
     }
 }
 
@@ -637,5 +677,3 @@ timerBtnsActive.onclick = (event)=>{
         }
     }
 }
-
-//Доделать нормальное отобржание таймера и откарректировать стили при альбомной ориентации экрана

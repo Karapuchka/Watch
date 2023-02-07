@@ -171,6 +171,7 @@
 
 #stopwatch-list{
     display: none;
+    overflow-y: scroll;
 }
 
 .time-panel {
@@ -286,6 +287,25 @@
     }
 }
 
+.time-list {
+    
+    padding: 0 25px;
+    line-height: 30px;
+
+    &__item {
+        
+        display: flex;
+        justify-content: space-between;
+
+        font-size: 18px;
+
+        border-bottom: 1px solid gray;
+    }
+
+    &__item--title {
+        font-weight: 600;
+    }
+}
 
 @media screen and (max-width: 330px) {
 
@@ -322,5 +342,13 @@
 
     .slider {
         height: 85vh;
+    }
+
+    .time-list {
+    
+        &__item {
+        
+            font-size: 16px;
+        }
     }
 }
