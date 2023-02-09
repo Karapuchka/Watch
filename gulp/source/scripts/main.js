@@ -18,6 +18,11 @@ const timerArrowUp   = document.getElementsByClassName('js-timer-arrow-up');
 const timerArrowDown = document.getElementsByClassName('js-timer-arrow-down');
 
 
+const modalAlarm = document.querySelector('.modal-alarm');
+
+const modalAlarmArrowUp   = document.getElementsByClassName('js-modal-alarm-arrow-up');
+const modalAlarmArrowDown = document.getElementsByClassName('js-modal-alarm-arrow-down');
+
 const sliderLine = document.querySelector('.slider__line');
 const sliderBtn  = document.querySelector('.slider__btns');
 const menu       = document.querySelector('.menu');
@@ -168,7 +173,7 @@ menu.onclick = (event)=>{
         }
 
         sliderBtn.children[2].classList.add('slider__btns__btn--active');
-        sliderBtn.children[2].style.backgroundImage = 'url(' + '../images/settings-white.png' +')';
+        sliderBtn.children[2].style.backgroundImage = 'url(' + '../images/alarm-white.png' +')';
 
         sliderLine.style.transform = 'translateX(' + (-window.innerWidth * 2) + 'px)';
 
@@ -199,7 +204,7 @@ sliderBtn.onclick = (event)=>{
         event.target.style.backgroundImage = 'url(' + '../images/timer-white.png' +')';
 
         sliderBtn.children[1].style.backgroundImage = 'url(' + '../images/sand-clock-black.png' +')';
-        sliderBtn.children[2].style.backgroundImage = 'url(' + '../images/settings-black.png' +')';
+        sliderBtn.children[2].style.backgroundImage = 'url(' + '../images/alarm-black.png' +')';
     
         sliderLine.style.transform = 'translateX(' + 0 + 'px)';
     }
@@ -218,7 +223,7 @@ sliderBtn.onclick = (event)=>{
         event.target.style.backgroundImage = 'url(' + '../images/sand-clock-white.png' +')';
 
         sliderBtn.children[0].style.backgroundImage = 'url(' + '../images/timer-black.png' +')';
-        sliderBtn.children[2].style.backgroundImage = 'url(' + '../images/settings-black.png' +')';
+        sliderBtn.children[2].style.backgroundImage = 'url(' + '../images/alarm-black.png' +')';
     
         sliderLine.style.transform = 'translateX(' + -window.innerWidth + 'px)';
     }
@@ -234,7 +239,7 @@ sliderBtn.onclick = (event)=>{
         }
 
         event.target.classList.add('slider__btns__btn--active');
-        event.target.style.backgroundImage = 'url(' + '../images/settings-white.png' +')';
+        event.target.style.backgroundImage = 'url(' + '../images/alarm-white.png' +')';
         
         sliderBtn.children[0].style.backgroundImage = 'url(' + '../images/timer-black.png' +')';
         sliderBtn.children[1].style.backgroundImage = 'url(' + '../images/sand-clock-black.png' +')';
@@ -677,3 +682,7 @@ timerBtnsActive.onclick = (event)=>{
         }
     }
 }
+
+
+//Доделать будильник
+//Доделать модальное окно
