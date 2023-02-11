@@ -18,6 +18,12 @@ const timerArrowUp   = document.getElementsByClassName('js-timer-arrow-up');
 const timerArrowDown = document.getElementsByClassName('js-timer-arrow-down');
 
 
+const alarmNoActiveCount = document.getElementById('alarm-no-active-count');
+const alarmActiveCount   = document.getElementById('alarm-active-count');
+const alarmBtnAdd        = document.getElementById('alarm-btn-add');
+const alarm              = document.getElementById('alarm');
+
+
 const modalAlarm = document.querySelector('.modal-alarm');
 
 const modalAlarmArrowUp   = document.getElementsByClassName('js-modal-alarm-arrow-up');
@@ -27,7 +33,20 @@ const sliderLine = document.querySelector('.slider__line');
 const sliderBtn  = document.querySelector('.slider__btns');
 const menu       = document.querySelector('.menu');
 
+let alrarmCountNoActiveLoval = 0;
+let alrarmCountActiveLoval   = 0;
+
 let detect = new MobileDetect(window.navigator.userAgent);
+
+if(window.localStorage.getItem('alrarmCountNoActiveLoval') && window.localStorage.getItem('alrarmCountActiveLoval')){
+
+    alrarmCountNoActiveLoval = JSON.parse(window.localStorage.getItem('alrarmCountNoActiveLoval'));
+    alrarmCountActiveLoval   = JSON.parse(window.localStorage.getItem('alrarmCountActiveLoval'));
+
+} else {
+    window.localStorage.setItem('alrarmCountNoActiveLoval', JSON.stringify(alrarmCountNoActiveLoval));
+    window.localStorage.setItem('alrarmCountActiveLoval', JSON.stringify(alrarmCountActiveLoval));
+}
 
 window.onresize = ()=>{
 
@@ -683,6 +702,10 @@ timerBtnsActive.onclick = (event)=>{
     }
 }
 
+
+alarmBtnAdd.onclick = ()=>{
+
+}
 
 //Доделать будильник
 //Доделать модальное окно

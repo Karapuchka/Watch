@@ -389,6 +389,45 @@
     }
 }
 
+.alarm__header {
+
+    height: 15%;
+    width: 95%;
+
+    margin: 0 auto;
+
+    flex-direction: row;
+
+    border-bottom: 1px solid #ADADAD;
+    
+
+    &__btn {
+        width: 180px;
+        height: 46px;
+
+        font-size: 24px;
+
+        margin: 0;
+    }
+
+    &__info {
+
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-direction: column;
+
+        line-height: 30px;
+
+        &__desck {
+            font-size: 20px;
+        }
+    }
+}
+
+.alarm__list {
+}
+
 @media screen and (max-width: 330px) {
 
     .menu {
