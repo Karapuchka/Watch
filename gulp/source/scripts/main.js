@@ -23,11 +23,11 @@ const alarmActiveCount   = document.getElementById('alarm-active-count');
 const alarmBtnAdd        = document.getElementById('alarm-btn-add');
 const alarm              = document.getElementById('alarm');
 
+const alarmList = document.querySelector('.alarm__list');
+
 
 const modalAlarm = document.querySelector('.modal-alarm');
 
-const modalAlarmArrowUp   = document.getElementsByClassName('js-modal-alarm-arrow-up');
-const modalAlarmArrowDown = document.getElementsByClassName('js-modal-alarm-arrow-down');
 
 const sliderLine = document.querySelector('.slider__line');
 const sliderBtn  = document.querySelector('.slider__btns');
@@ -37,6 +37,25 @@ let alrarmCountNoActiveLoval = 0;
 let alrarmCountActiveLoval   = 0;
 
 let detect = new MobileDetect(window.navigator.userAgent);
+
+if(window.innerHeight < window.innerWidth){
+
+    stopwatch.style.flexDirection = 'row';
+
+    stopwatchList.style.padding = '5px 25px';
+
+    document.querySelector('.time-panel__item__btns--layout-time').style.margin = '15px 0 0 0';
+
+    timerWatch.style.margin = '20px 0 0 0';
+
+    alarmList.style.flexDirection = 'row';
+
+} else{
+
+    alarmList.style.flexDirection = 'column';
+
+    stopwatch.style.flexDirection = 'column';
+}
 
 if(window.localStorage.getItem('alrarmCountNoActiveLoval') && window.localStorage.getItem('alrarmCountActiveLoval')){
 
@@ -118,21 +137,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
 })
 
 menu.onclick = (event)=>{
-
-    if(window.innerHeight < window.innerWidth){
-
-        stopwatch.style.flexDirection = 'row';
-
-        stopwatchList.style.padding = '5px 25px';
-
-        document.querySelector('.time-panel__item__btns--layout-time').style.margin = '15px 0 0 0';
-
-        timerWatch.style.margin = '20px 0 0 0';
-
-    } else{
-
-        stopwatch.style.flexDirection = 'column';
-    }
 
     if(event.target.id == 'menu-item-timer'){
         for (let i = 0; i < sliderBtn.children.length; i++) {
@@ -705,6 +709,77 @@ timerBtnsActive.onclick = (event)=>{
 
 alarmBtnAdd.onclick = ()=>{
 
+    modalAlarm.style.display = 'flex';
+
+    setTimeout(()=>{
+        modalAlarm.classList.add('modal-alarm--hidden');
+    }, 300);
+}
+
+modalAlarm.onclick = (event)=>{
+
+    if(event.target.id == 'modal-alarm-btn-exit'){
+
+        modalAlarm.classList.remove('modal-alarm--hidden');
+
+        setTimeout(()=>{
+
+            modalAlarm.style.display = 'none';
+        },  400)
+    }
+
+    if(event.target.classList.contains('js-modal-alarm-arrow-up')){
+
+        if(+event.target.parentElement.children[1].innerText < 60){
+
+            if(+event.target.parentElement.children[1].innerText < 9){
+
+                event.target.parentElement.children[1].innerText = `0${+event.target.parentElement.children[1].innerText + 1}`;
+    
+            } else {
+    
+                event.target.parentElement.children[1].innerText = +event.target.parentElement.children[1].innerText + 1;
+    
+            }
+
+        } else {
+
+            event.target.parentElement.children[1].innerText = '00';
+        }
+    }
+
+    if(event.target.classList.contains('js-modal-alarm-arrow-down')){
+
+         if(+event.target.parentElement.children[1].innerText > 0){
+            
+            if(+event.target.parentElement.children[1].innerText < 11){
+
+                event.target.parentElement.children[1].innerText = `0${+event.target.parentElement.children[1].innerText - 1}`;
+    
+            } else {
+    
+                event.target.parentElement.children[1].innerText = +event.target.parentElement.children[1].innerText - 1;
+    
+            }
+
+        } else {
+
+            event.target.parentElement.children[1].innerText = '60';
+        }
+    }
+}
+
+// Шаблон для будильников
+
+function newAlarLocalStorage(name, time, count){
+
+    let alarm = {
+        id: count,
+        name: name,
+        time: time,
+    }
+
+    window.localStorage.getItem(`alarm${count}`, JSON.stringify(alarm));
 }
 
 //Доделать будильник
