@@ -17,8 +17,8 @@ const timerWatch      = document.querySelector('.js-timer-watch');
 const timerArrowUp   = document.getElementsByClassName('js-timer-arrow-up');
 const timerArrowDown = document.getElementsByClassName('js-timer-arrow-down');
 
-
 const alarmNoActiveCount = document.getElementById('alarm-no-active-count');
+const alarmTemplateItem  = document.getElementById('temp-alarm-list-item');
 const alarmActiveCount   = document.getElementById('alarm-active-count');
 const alarmBtnAdd        = document.getElementById('alarm-btn-add');
 const alarm              = document.getElementById('alarm');
@@ -57,14 +57,23 @@ if(window.innerHeight < window.innerWidth){
     stopwatch.style.flexDirection = 'column';
 }
 
-if(window.localStorage.getItem('alrarmCountNoActiveLoval') && window.localStorage.getItem('alrarmCountActiveLoval')){
+console.log(window.localStoragey);
+
+if(window.localStorage.getItem('alrarmCountNoActiveLoval') && window.localStorage.getItem('alrarmCountActiveLoval') && window.localStorage.getItem('countAlarm')){
 
     alrarmCountNoActiveLoval = JSON.parse(window.localStorage.getItem('alrarmCountNoActiveLoval'));
     alrarmCountActiveLoval   = JSON.parse(window.localStorage.getItem('alrarmCountActiveLoval'));
 
 } else {
+
     window.localStorage.setItem('alrarmCountNoActiveLoval', JSON.stringify(alrarmCountNoActiveLoval));
     window.localStorage.setItem('alrarmCountActiveLoval', JSON.stringify(alrarmCountActiveLoval));
+
+    if(window.localStorage.length >= 2){
+
+        window.localStorage.setItem('countAlarm', window.localStorage.length - 2);
+    }
+
 }
 
 window.onresize = ()=>{
@@ -767,19 +776,68 @@ modalAlarm.onclick = (event)=>{
             event.target.parentElement.children[1].innerText = '60';
         }
     }
+
+    if(event.target.id == 'modal-alarm-btn-save'){
+
+       let validName; // Если false, то строка состоит из пробелов
+       let spaceInName = [] // Id пробелов в начале строки, если null, то пробелов нет
+
+       for (let i = 0; i < document.getElementById('modal-alarm-name').value.length; i++) {
+        
+            if(document.getElementById('modal-alarm-name').value[i] == ' '){
+   
+                validName = false;
+                spaceInName.push(i);
+
+            } else{
+
+                validName = true;
+
+                if(spaceInName.length == 0){
+
+                    newAlarLocalStorage(document.getElementById('modal-alarm-name').value, [document.getElementById('modal-alarm-hour-number').innerText, document.getElementById('modal-alarm-minute-number').innerText,document.getElementById('modal-alarm-seconds-number').innerText], +window.localStorage.getItem('count') + 1);
+
+
+                } else {
+
+                    newAlarLocalStorage(document.getElementById('modal-alarm-name').value.slice(spaceInName.length, document.getElementById('modal-alarm-name').value.length), [document.getElementById('modal-alarm-hour-number').innerText, document.getElementById('modal-alarm-minute-number').innerText,document.getElementById('modal-alarm-seconds-number').innerText], +window.localStorage.getItem('count') + 1);
+
+                }
+
+               setTimeout(()=>{ // Сделать через ассинхронность
+
+                let newAlarmName = alarmTemplateItem.content.cloneNode(true); // Создаем новый будильник по шаблону
+                let alarInStorage = JSON.parse(window.localStorage.getItem(`alarm${window.localStorage.getItem('count')}`)); //Берём информация из LocalStorage
+                
+                /* Наполняем будильник информацией */
+                newAlarmName.getElementById('alarm-item-info-time').innerText = `${alarInStorage.time[0]}:${alarInStorage.time[1]}:${alarInStorage.time[2]}`;
+                newAlarmName.getElementById('alarm-item-info-name').innerText = `${alarInStorage.name}`;
+
+                
+                alarmList.appendChild(newAlarmName);
+
+               }, 100);
+
+               window.localStorage.setItem('count', +window.localStorage.getItem('count') + 1)
+                break;
+            }
+       }
+    }
 }
 
 // Шаблон для будильников
 
-function newAlarLocalStorage(name, time, count){
+function newAlarLocalStorage(name, time, count, active){
 
     let alarm = {
         id: count,
         name: name,
         time: time,
+        active: active,
     }
 
-    window.localStorage.getItem(`alarm${count}`, JSON.stringify(alarm));
+    window.localStorage.setItem(`alarm${count}`, JSON.stringify(alarm));
+
 }
 
 //Доделать будильник
