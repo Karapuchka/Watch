@@ -48,16 +48,10 @@ if(window.innerHeight < window.innerWidth){
 
     timerWatch.style.margin = '20px 0 0 0';
 
-    alarmList.style.flexDirection = 'row';
-
 } else{
-
-    alarmList.style.flexDirection = 'column';
 
     stopwatch.style.flexDirection = 'column';
 }
-
-console.log(window.localStoragey);
 
 if(window.localStorage.getItem('alrarmCountNoActiveLoval') && window.localStorage.getItem('alrarmCountActiveLoval') && window.localStorage.getItem('countAlarm')){
 
@@ -804,7 +798,7 @@ modalAlarm.onclick = (event)=>{
 
                 }
 
-               setTimeout(()=>{ // Сделать через ассинхронность
+               setTimeout(()=>{
 
                 let newAlarmName = alarmTemplateItem.content.cloneNode(true); // Создаем новый будильник по шаблону
                 let alarInStorage = JSON.parse(window.localStorage.getItem(`alarm${window.localStorage.getItem('count')}`)); //Берём информация из LocalStorage

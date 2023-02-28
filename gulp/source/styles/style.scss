@@ -286,6 +286,11 @@
         }
     }
 
+    &__item--alarm{
+        align-items: flex-start;
+        justify-content: flex-start;
+    }
+
     .arrow-up, .arrow-down{
 
         left: 25px; 
@@ -447,13 +452,79 @@
 }
 
 .alarm__list {  
-    width: 100%;
-    height: 100%;
+    width: 95%;
 
     list-style: none;
 
+    margin: 0 auto;
+    padding: 10px 0;
+
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    &__item{
+        
+        height: 60px;
+        width: 49%;
+
+        padding: 10px;
+        margin: 1% 0;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        border: 1px solid black;
+        border-radius: 20px;
+
+        &__content {
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            &__text:first-child {
+                font-size: 24px;
+                margin-right: 10px;
+            }
+
+            &__text:first-child {
+                font-size: 15px;
+            }
+        }
+    }
+
+    .alarm__btns {
+        &__btn {
+            height: 35px;
+            width: 35px;
+
+            margin-right: 10px;
+
+            cursor: pointer;
+        }
+
+        #alarm-btn-del{
+            background: url('../images/del.png') no-repeat center center;
+            background-size: 80%;
+        }
+
+        #alarm-btn-setting{
+            background: url('../images/settings-black.png') no-repeat center center;
+            background-size: 80%;
+        }
+
+        #alarm-btn-active{
+            height: 25px;
+            width: 35px;
+
+            border: 1px solid black;
+            background-color: #fff;
+            border-radius: 10px;
+        }
+    }
+
 }
 
 @media screen and (max-width: 330px) {
